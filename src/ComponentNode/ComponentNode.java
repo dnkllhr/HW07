@@ -12,9 +12,8 @@ public class ComponentNode {
 		this.next = null;
 	}
 	
-	@Override
-	public String toString(){
-		return component.toString();
+	public String indent(Component component){
+		return this.component.indent(component);
 	}
 	
 }

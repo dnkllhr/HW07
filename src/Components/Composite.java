@@ -2,7 +2,11 @@ package Components;
 
 public abstract class Composite extends Component{
 	
-	public boolean add(Component component){
+/*  These add and remove methods use TM because they are the template that calls the subclass 
+	specific specificAdd and specificRemove. They maintain the invariant by setting the parent 
+	appropriately when a component is added or removed from a Composite. */
+	
+	public final boolean add(Component component){
 		if(canAdd(component)){
 			specificAdd(component);
 			component.setParent(this);
@@ -14,29 +18,31 @@ public abstract class Composite extends Component{
 		}
 	}
 	
-	public Component remove(){
+	public final Component remove(){
 		if(canRemove()){
 			Component component = specificRemove();
 			component.setParent(null);
 			return component;
 		}
-		else {
+		else{
 			System.out.println("No component to remove.");
 			return null;
 		}
 	}
 	
-	public boolean canAdd(Component component){
+	protected boolean canAdd(Component component){
 		if(component.getParent() == null){
 			return true;
 		}
 		return false;
 	}
 	
-	public abstract boolean canRemove();
+	protected abstract boolean canRemove();
 	
-	public abstract void specificAdd(Component component);
+	protected abstract void specificAdd(Component component);
 	
-	public abstract Component specificRemove();
+	protected abstract Component specificRemove();
+	
+	public abstract Component getChild(int n);
 
 }
